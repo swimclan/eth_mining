@@ -1,6 +1,7 @@
 
 class Mining:
     def __init__(self):
+        self.invest_days = 1460
         self.eth_usd = 210.0
         self.eth_cost_per_megahash = 30 / self.eth_usd
         self.start_megahash = 0
@@ -10,7 +11,7 @@ class Mining:
         self.contract_length = 730
         self.contracts = []
         self.paid_off = False
-        self.renew = False
+        self.renew = True
 
         self.megahashpower = self.start_megahash
         self.usd_payout = self.megahashpower * self.daily_eth_per_megahash * self.eth_usd
@@ -19,7 +20,7 @@ class Mining:
         self.pocket_ether_balance = 0
 
     def start(self):
-        for day in range(0,1460):
+        for day in range(0,self.invest_days):
             if self.reinvest_ether_balance >= (self.eth_cost_per_megahash * self.target_megahash):
                 self.buy_megahash(day)
             self.payout(day)
