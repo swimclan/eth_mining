@@ -10,6 +10,7 @@ class Mining:
         self.contract_length = 730
         self.contracts = []
         self.paid_off = False
+        self.renew = False
 
         self.megahashpower = self.start_megahash
         self.usd_payout = self.megahashpower * self.daily_eth_per_megahash * self.eth_usd
@@ -47,6 +48,15 @@ class Mining:
         if len(self.contracts) > 0 and self.contracts[0] == day:
             self.contracts = self.contracts[1:]
             self.megahashpower -= self.target_megahash
+            if self.renew and (self.pocket_ether_balance >= (self.target_megahash * self.eth_cost_per_megahash)):
+                self.renew_contract(day)
+
+    def renew_contract(self, day):
+        self.pocket_ether_balance -= (self.target_megahash * self.eth_cost_per_megahash)
+        self.contracts.append(day + self.contract_length)
+        self.megahashpower += self.target_megahash
+
+
 
 
 Mining().start()
