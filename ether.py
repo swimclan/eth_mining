@@ -4,7 +4,7 @@ class Mining:
         self,
         invest_days=1460,
         eth_usd=300.0,
-        usd_cost_per_megahash=30,
+        usd_cost_per_megahash=28,
         start_megahash = 0,
         target_megahash = 150,
         daily_eth_per_megahash = 0.00051376,
@@ -81,18 +81,20 @@ def optimize_reinvest_ratio(investment_period_days, eth_avg_price, target_hash, 
     max_pocket = 0
     for i in range(0, 1000):    
         ratio = float(i) / 1000
-        pocket = Mining(invest_days=investment_period_days, eth_usd=eth_avg_price, target_megahash=target_hash, daily_eth_per_megahash=daily_payout_eth, reinvest_ratio=ratio, contract_length=contract_length_days).start()['pocket_balance_USD']
+        mining = Mining(invest_days=investment_period_days, eth_usd=eth_avg_price, target_megahash=target_hash, daily_eth_per_megahash=daily_payout_eth, reinvest_ratio=ratio, contract_length=contract_length_days).start()
+        pocket = mining['pocket_balance_USD']
         if pocket > max_pocket:
             max_pocket = pocket
             best_ratio = ratio
-    return {'best_ratio': best_ratio, 'pocket_balance': max_pocket}
+            best_payoff = mining['payoff_days']
+    return {'best_ratio': best_ratio, 'pocket_balance': max_pocket, 'payoff_days': best_payoff}
 
 investment_period_years = raw_input('How many years do you want to invest? (1-20): ')
 investment_period_days = int(investment_period_years) * 365
 eth_avg_price = raw_input('What do you think the avg price of ETH will be over that time? ($): ')
 eth_avg_price = float(eth_avg_price)
 target = raw_input('How much do you want to invest up front? ($): ')
-target_hash = float(target) / 30
+target_hash = float(target) / 28
 daily_payout_eth = raw_input('How much ETH is paid out daily on avg by the miner? (ETH): ')
 daily_payout_eth = float(daily_payout_eth)
 contract_length_years = raw_input('What is the contract length in years? (1-5): ')
