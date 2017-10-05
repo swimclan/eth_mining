@@ -1,7 +1,7 @@
 
 class Mining:
     def __init__(self):
-        self.eth_usd = 180.0
+        self.eth_usd = 210.0
         self.eth_cost_per_megahash = 30 / self.eth_usd
         self.start_megahash = 0
         self.target_megahash = 150
@@ -23,12 +23,11 @@ class Mining:
                 self.buy_megahash(day)
             self.payout(day)
             self.expire(day)
-            print 'DAY', day
-            print 'start balance (USD):', self.ether_balance * self.eth_usd
-            print '# contracts:', len(self.contracts)
-            print 'reinvest balance (USD):', self.reinvest_ether_balance * self.eth_usd
-            print 'pocket balance (USD):', self.pocket_ether_balance * self.eth_usd
-            print 'megahash power (MH/s):', self.megahashpower
+        print 'start balance (USD):', self.ether_balance * self.eth_usd
+        print '# contracts:', len(self.contracts)
+        print 'reinvest balance (USD):', self.reinvest_ether_balance * self.eth_usd
+        print 'pocket balance (USD):', self.pocket_ether_balance * self.eth_usd
+        print 'megahash power (MH/s):', self.megahashpower
 
     def buy_megahash(self, day):
         self.contracts.append(day + self.contract_length)
